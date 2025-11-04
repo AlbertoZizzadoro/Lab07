@@ -19,8 +19,12 @@ class Model:
         # TODO
 
     def get_epoche(self):
-        """Restituisce la lista di tutte le epoche."""
-        # TODO
+        lista_epoche = []
+        for artefatto in self._artefatto_dao.get_artefatti():
+            if artefatto.epoca not in lista_epoche:
+                lista_epoche.append(artefatto.epoca)
+        return lista_epoche
+
 
     # --- MUSEI ---
     def get_musei(self):
