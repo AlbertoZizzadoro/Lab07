@@ -18,8 +18,8 @@ class MuseoDAO:
             print("Errore connessione DB")
             return []
 
-        cursor = cnx.cursor(dictionary=True)  # Usiamo dictionary=True per mappare DTO
-        query = "SELECT * FROM museo"  # CORREZIONE: museo (singolare)
+        cursor = cnx.cursor(dictionary=True)
+        query = "SELECT * FROM museo"
         cursor.execute(query)
         for riga in cursor:
             # Mappiamo i campi del DB ai campi del DTO
