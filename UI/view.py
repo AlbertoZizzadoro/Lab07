@@ -1,7 +1,8 @@
 import flet as ft
 from UI.alert import AlertManager
-from UI.controller import Controller
-from model.model import Model
+# Rimuoviamo Controller e Model da qui, non servono nella View
+# from UI.controller import Controller
+# from model.model import Model
 
 '''
     VIEW:
@@ -20,9 +21,8 @@ class View:
         # Alert
         self.alert = AlertManager(page)
 
-        # Controller
-        self.controller = Controller(self, Model())
-        self.controller.popola_dropdown()
+        # Controller (verrà impostato da main.py)
+        self.controller = None
 
     def show_alert(self, messaggio):
         self.alert.show_alert(messaggio)
@@ -39,28 +39,28 @@ class View:
         self.txt_titolo = ft.Text(value="Musei di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
+        # NOTA: le opzioni verranno popolate dal controller
         self._musei = ft.Dropdown(label="Seleziona Museo",
-                                  #options=[self._model.get_musei()],
                                   width=300,
                                   hint_text="Seleziona un museo",
-                                  on_change=self.controller.popola_dropdown,
-
+                                  on_change=self.controller.seleziona_museo,
                                   )
         self._epoche = ft.Dropdown(label="Seleziona Epoca",
-                                   options=[self._controller.popola_dropdown()],
+
+                                   options=[],
                                    width=200,
                                    hint_text="Seleziona un'epoca",
-                                   on_change=self.controller.popola_dropdown,
+
+                                   on_change=self.controller.seleziona_epoca,
                                    )
         self._row=ft.Row(controls=[self._musei,self._epoche],
                          alignment=ft.MainAxisAlignment.CENTER)
 
-
-
         # Sezione 3: Artefatti
         self._btnMostrArtefatti = ft.ElevatedButton(text="Mostra Artefatti",
                                                     width=300,
-                                                   # on_click=self.controller.mostra_artefatti
+
+                                                    on_click=self.controller.mostra_artefatti
                                                 )
         self._listArtefatti = ft.ListView(expand=True, spacing=10, padding=20)
 
@@ -70,21 +70,16 @@ class View:
         # --- Layout della pagina ---
         self.page.add(
             self.toggle_cambia_tema,
-
-            # Sezione 1
             self.txt_titolo,
             ft.Divider(),
-
-            # Sezione 2: Filtraggio
             self._row,
             ft.Divider(),
-
-            # Sezione 3: Artefatti
             self._btnMostrArtefatti,
             self._listArtefatti
-
         )
 
+
+        self.controller.popola_dropdown()
 
         self.page.scroll = "adaptive"
         self.page.update()
