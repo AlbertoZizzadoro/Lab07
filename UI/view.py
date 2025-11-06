@@ -1,5 +1,7 @@
 import flet as ft
 from UI.alert import AlertManager
+from UI.controller import Controller
+from model.model import Model
 
 '''
     VIEW:
@@ -19,7 +21,8 @@ class View:
         self.alert = AlertManager(page)
 
         # Controller
-        self.controller = None
+        self.controller = Controller(self, Model())
+        self.controller.popola_dropdown()
 
     def show_alert(self, messaggio):
         self.alert.show_alert(messaggio)
@@ -37,17 +40,17 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         self._musei = ft.Dropdown(label="Seleziona Museo",
-                                  options=[],
+                                  #options=[self._model.get_musei()],
                                   width=300,
                                   hint_text="Seleziona un museo",
-                                  #on_change=self.controller.seleziona_museo,
+                                  on_change=self.controller.popola_dropdown,
 
                                   )
         self._epoche = ft.Dropdown(label="Seleziona Epoca",
-                                   options=[],
+                                   options=[self._controller.popola_dropdown()],
                                    width=200,
                                    hint_text="Seleziona un'epoca",
-                                   #on_change=self.controller.seleziona_epoca,
+                                   on_change=self.controller.popola_dropdown,
                                    )
         self._row=ft.Row(controls=[self._musei,self._epoche],
                          alignment=ft.MainAxisAlignment.CENTER)

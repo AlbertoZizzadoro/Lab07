@@ -20,9 +20,8 @@ class Model:
 
     def get_epoche(self):
         lista_epoche = []
-        for artefatto in self._artefatto_dao.get_artefatti():
-            if artefatto.epoca not in lista_epoche:
-                lista_epoche.append(artefatto.epoca)
+        lista_epoche=self._museo_dao.get_epoche()
+        lista_epoche.sort()
         return lista_epoche
 
 

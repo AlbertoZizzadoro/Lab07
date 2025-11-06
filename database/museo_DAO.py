@@ -27,13 +27,15 @@ class MuseoDAO:
         lista_epoche=[]
         cnx=ConnessioneDB.get_connection()
         cursor=cnx.cursor()
-        query="SELECT DISTINCT epoca FROM artefatti"
+        query="SELECT DISTINCT(epoca) FROM artefatti"
         cursor.execute(query)
         for riga in cursor:
             lista_epoche.append(riga[0])
         cursor.close()
         cnx.close()
         return lista_epoche
+
+
 
 
 

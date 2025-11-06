@@ -9,7 +9,7 @@ from model.model import Model
 '''
 
 class Controller:
-    def __init__(self, view: View, model: Model):
+    def __init__(self, view: View, model: Model) -> None:
         self._model = model
         self._view = view
 
@@ -18,10 +18,17 @@ class Controller:
         self.epoca_selezionata = None
 
     # POPOLA DROPDOWN
-    # TODO
+    def popola_dropdown(self):
+        self._model._musei.options = [ft.dropdown.Option(museo.nome) for museo in self._model.get_musei()]
+        self._model._epoche.options = [ft.dropdown.Option(epoca) for epoca in self._model.get_epoche()]
+
 
     # CALLBACKS DROPDOWN
-    # TODO
+    def seleziona_museo(self, e):
+        self.museo_selezionato = e.control.value
+
+    def seleziona_epoca(self, e):
+        self.epoca_selezionata = e.control.value
 
     # AZIONE: MOSTRA ARTEFATTI
     # TODO
